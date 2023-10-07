@@ -16,7 +16,6 @@ def user_error(func):
                 raise e  # Піднімаэмо помилку наверх, якщо вона іншого типу
     return inner
 
-# @user_error
 def sanitize_phone_number(phone):
     collected_phone = ""
     for ch in phone:
