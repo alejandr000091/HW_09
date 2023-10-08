@@ -16,13 +16,14 @@ def user_error(func):
                 raise e  # Піднімаэмо помилку наверх, якщо вона іншого типу
     return inner
 
+
 def sanitize_phone_number(phone):
     collected_phone = ""
     for ch in phone:
         collected_phone += ch
     new_phone = (
         collected_phone.strip()
-            .removeprefix("+38")
+            #.removeprefix("+38")
             .replace("(", "")
             .replace(")", "")
             .replace("-", "")
@@ -31,8 +32,11 @@ def sanitize_phone_number(phone):
     #print(new_phone)
     if len(new_phone) == 10:
          return "+38" + new_phone
+    if len(new_phone) == 13:
+         return new_phone
     else: 
         raise ValueError("Not enough number")
+    
 
 @user_error
 def add_record(*args):
@@ -55,8 +59,10 @@ def change_record(*args):
 def unknown_cmd(*args):
     return "Unknown command. Try again. Or use 'help'"
 
+
 def hello_cmd(*args):
     return "How can I help you?"
+
 
 def help_cmd(*args):
     return_str = "\n"
@@ -72,6 +78,7 @@ def help_cmd(*args):
         return_str += ch + "\n"
     return return_str
 
+
 @user_error
 def get_phone(*args):
     name = args[0]
@@ -79,6 +86,7 @@ def get_phone(*args):
     if rec:
         return f"Phone number: {rec}"
     
+
 @user_error 
 def show_all(*args):
     return_str = "\n"
@@ -86,8 +94,10 @@ def show_all(*args):
         return_str += name + " " + numbers + "\n"
     return return_str
 
+
 def close_cmd(*args):
     return "Good bye!"
+
 
 COMMANDS = {add_record: "add",
             change_record: "change",
